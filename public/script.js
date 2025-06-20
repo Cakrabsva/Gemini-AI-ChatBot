@@ -28,7 +28,7 @@ form.addEventListener('submit', async function (e) {
       body: JSON.stringify({prompt: userMessage})
     })
 
-    if(thinkingIndicator && thinkingIndicator.classList.contains('thinking')) {
+    if(thinkingIndicator && thinkingIndicator.classList.contains('AiThinking')) {
       thinkingIndicator.remove()
     }
 
@@ -40,14 +40,14 @@ form.addEventListener('submit', async function (e) {
 
     if(data.output) {
       appendMessage('bot', data.output)
-      console.log(thinkingIndicator,"<<<,Bacaa bro thinkingIndicator")
+
     } else {
       appendMessage('bot', 'Sorry, I could not get a response')
     }
 
   } catch (err) {
     console.log(err)
-    const thinkingIndicator = chatBox.querySelector('.message.bot.thinking')
+    const thinkingIndicator = chatBox.querySelector('.AiThinking')
     if (thinkingIndicator) {
       thinkingIndicator.remove()
     }
@@ -55,13 +55,28 @@ form.addEventListener('submit', async function (e) {
     }
 });
 
-function appendMessage(sender, text, isThinking = false) {
+function appendMessage(sender, dataOutput, isThinking = false) {
+  // const msg = document.createElement('div');
+  // msg.classList.add('message', sender);
+  // if (isThinking) {
+  //   msg.classList.add('thinking')
+  // }
+  // msg.textContent = text;
+  // chatBox.appendChild(msg);
+  // chatBox.scrollTop = chatBox.scrollHeight;
   const msg = document.createElement('div');
-  msg.classList.add('message', sender);
   if (isThinking) {
-    msg.classList.add('thinking')
+    msg.classList.add('AiThinking')
+    setTimeout(() => {
+      msg.innerHTML = `<div class="message ${sender} thinking">${dataOutput}</div>`
+  }, 500);
+    
+  } else {
+    msg.innerHTML = `<div class="message ${sender}">${dataOutput}</div>`
   }
-  msg.textContent = text;
+  
+  
   chatBox.appendChild(msg);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
+
