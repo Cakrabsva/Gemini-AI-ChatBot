@@ -16,7 +16,10 @@ body {
 
 h1 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+
+} #identifier {
+  text-align: center;
 }
 
 .chat-box {
@@ -49,6 +52,19 @@ h1 {
   text-align: left;
 }
 
+.message.bot.thinking {
+  font-style: italic;
+  color: #777;
+  width: auto;
+}
+
+.message.error {
+  background-color: #ffdddd;
+  color: #d8000c;
+  align-self: flex-start;
+  border: 1px solid #d8000c;
+}
+
 form {
   display: flex;
   gap: 10px;
@@ -75,3 +91,5 @@ button {
 button:hover {
   background-color: #0b5ed7;
 }
+
+
