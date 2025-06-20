@@ -3,7 +3,7 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import {GoogleGenAI} from '@google/genai'
+import {GoogleGenerativeAI} from '@google/generative-ai'
 
 dotenv.config()
 
@@ -14,16 +14,15 @@ app.use(cors())
 app.use(express.json())
 app.use(express.static('public'))
 
-const ai = new GoogleGenAI(process.env.GEMINI_API_KEY)
+const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+const model = ai.getGenerativeModel({ model: "gemini-1.5-flash"});
 
 app.post('/api/chat', async (req, res) => {
     try{
         const {prompt} = req.body
-        const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: prompt
-        })
-        res.json({output: response.text})
+        const result = await model.generateContent(prompt);
+        const response = result.response;
+        res.json({output: response.text()})
 
     }catch (err) {
         res.status(500).json({error: err.message})
